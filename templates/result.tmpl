@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patient Record PDF</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="container">
+    <h2>Patient Record PDF is ready</h2>
+    <div class="buttons">
+        <a href="/pdf" target="_blank"><button type="button">View PDF</button></a>
+        <a href="/pdf" download="patient_record.pdf"><button type="button">Download PDF</button></a>
+        <button type="button" onclick="window.open('/pdf'); setTimeout(()=>window.print(),500);">Print PDF</button>
+        <button type="button" onclick="navigator.share ? navigator.share({title:'Patient Record PDF', url:'/pdf'}) : alert('Sharing not supported in this browser');">Share</button>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patient Record Form</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="container">
+    <h2>Patient Record Form</h2>
+    <form action="/finish" method="post">
+
+        <fieldset>
+            <legend>Patient & Demographics</legend>
+            <div class="form-grid">
+                <input name="unique_id" placeholder="Unique ID">
+                <input name="first_name" placeholder="First Name">
+                <input name="middle_name" placeholder="Middle Name">
+                <input name="surname" placeholder="Surname">
+                <input type="date" name="dob" placeholder="Date of Birth">
+                <input name="gender" placeholder="Gender">
+                <input name="phone" placeholder="Phone">
+                <input name="email" placeholder="Email">
+                <input name="address" placeholder="Physical Address">
+                <input name="next_of_kin" placeholder="Next of Kin">
+                <input name="relationship" placeholder="Relationship">
+                <input name="kin_contact" placeholder="Contact Number">
+                <input name="marital_status" placeholder="Marital Status">
+                <input name="insurance_provider" placeholder="Medical Aid/Insurance">
+                <input name="member_number" placeholder="Member Number">
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Clinical & Medical Information</legend>
+            <div class="form-grid">
+                <textarea name="clinical_history" placeholder="Clinical History"></textarea>
+                <textarea name="allergies" placeholder="Allergies / Idiosyncrasies"></textarea>
+                <textarea name="assessments" placeholder="Medical Assessments"></textarea>
+                <textarea name="treatment_plan" placeholder="Treatment & Management Plan"></textarea>
+                <textarea name="medication" placeholder="Medication & Dosage"></textarea>
+                <textarea name="referrals" placeholder="Referrals"></textarea>
+                <textarea name="test_results" placeholder="Test & Investigation Results"></textarea>
+                <input type="datetime-local" name="consultation_datetime" placeholder="Consultation Date & Time">
+                <input name="consultation_place" placeholder="Consultation Place">
+                <textarea name="patient_reaction" placeholder="Patient's Reaction to Treatment"></textarea>
+            </div>
+        </fieldset>
+
+        <div class="buttons">
+            <button type="submit">Finish</button>
+        </div>
+
+    </form>
+</div>
+</body>
+</html>

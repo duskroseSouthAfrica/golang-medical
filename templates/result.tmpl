@@ -1,18 +1,524 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Patient Record PDF</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Record PDF - MedRecord Pro</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.15);
+            padding: 50px 40px;
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #27ae60, #2ecc71, #3498db, #9b59b6);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            position: relative;
+            animation: successPulse 2s ease-in-out infinite;
+        }
+
+        .success-icon i {
+            color: white;
+            font-size: 3rem;
+            animation: checkmark 0.8s ease-in-out;
+        }
+
+        @keyframes successPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.7); }
+            50% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(39, 174, 96, 0); }
+        }
+
+        @keyframes checkmark {
+            0% { transform: scale(0) rotate(-45deg); opacity: 0; }
+            50% { transform: scale(1.3) rotate(-45deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        .title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .pdf-info {
+            background: linear-gradient(135deg, #ecf0f1, #bdc3c7);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 35px;
+            border-left: 5px solid #3498db;
+        }
+
+        .pdf-info h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .pdf-info h3 i {
+            margin-right: 10px;
+            color: #3498db;
+        }
+
+        .pdf-info p {
+            color: #5d6d7e;
+            font-size: 0.95rem;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .action-btn:hover:before {
+            left: 100%;
+        }
+
+        .action-btn i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(52, 152, 219, 0.3);
+        }
+
+        .action-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* Specific button colors */
+        .btn-view {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+
+        .btn-view:hover {
+            box-shadow: 0 10px 25px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn-download {
+            background: linear-gradient(135deg, #27ae60, #229954);
+        }
+
+        .btn-download:hover {
+            box-shadow: 0 10px 25px rgba(39, 174, 96, 0.3);
+        }
+
+        .btn-print {
+            background: linear-gradient(135deg, #e67e22, #d35400);
+        }
+
+        .btn-print:hover {
+            box-shadow: 0 10px 25px rgba(230, 126, 34, 0.3);
+        }
+
+        .btn-share {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+        }
+
+        .btn-share:hover {
+            box-shadow: 0 10px 25px rgba(155, 89, 182, 0.3);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: #7f8c8d;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            padding: 10px 15px;
+            border-radius: 8px;
+        }
+
+        .back-link:hover {
+            color: #2c3e50;
+            background: #ecf0f1;
+            transform: translateX(-5px);
+        }
+
+        .back-link i {
+            margin-right: 8px;
+        }
+
+        .security-note {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 25px;
+            border-left: 4px solid #17a2b8;
+        }
+
+        .security-note p {
+            color: #495057;
+            font-size: 0.9rem;
+            margin: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .security-note i {
+            color: #17a2b8;
+            margin-right: 10px;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 35px 25px;
+            }
+            
+            .title {
+                font-size: 1.8rem;
+            }
+            
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-btn {
+                padding: 18px 25px;
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .success-icon {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .success-icon i {
+                font-size: 2.2rem;
+            }
+            
+            .title {
+                font-size: 1.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+        }
+
+        /* Loading animation for actions */
+        .action-btn.loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .action-btn.loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <h2>Patient Record PDF is ready</h2>
-    <div class="buttons">
-        <a href="/pdf" target="_blank"><button type="button">View PDF</button></a>
-        <a href="/pdf" download="patient_record.pdf"><button type="button">Download PDF</button></a>
-        <button type="button" onclick="window.open('/pdf'); setTimeout(()=>window.print(),500);">Print PDF</button>
-        <button type="button" onclick="navigator.share ? navigator.share({title:'Patient Record PDF', url:'/pdf'}) : alert('Sharing not supported in this browser');">Share</button>
+    <div class="container">
+        <div class="success-icon">
+            <i class="fas fa-check"></i>
+        </div>
+        
+        <h1 class="title">PDF Generated Successfully!</h1>
+        <p class="subtitle">Your patient record has been processed and converted to PDF format. Choose an action below to proceed.</p>
+        
+        <div class="pdf-info">
+            <h3><i class="fas fa-file-pdf"></i> Patient Record Document</h3>
+            <p>Complete medical record with all patient information, clinical data, and consultation details.</p>
+        </div>
+        
+        <div class="action-buttons">
+            <a href="/pdf" target="_blank" class="action-btn btn-view" id="viewBtn">
+                <i class="fas fa-eye"></i>
+                View PDF
+            </a>
+            
+            <a href="/pdf" download="patient_record.pdf" class="action-btn btn-download" id="downloadBtn">
+                <i class="fas fa-download"></i>
+                Download PDF
+            </a>
+            
+            <button type="button" class="action-btn btn-print" id="printBtn">
+                <i class="fas fa-print"></i>
+                Print PDF
+            </button>
+            
+            <button type="button" class="action-btn btn-share" id="shareBtn">
+                <i class="fas fa-share-alt"></i>
+                Share PDF
+            </button>
+        </div>
+        
+        <div class="security-note">
+            <p>
+                <i class="fas fa-shield-alt"></i>
+                This PDF contains sensitive medical information and is protected under HIPAA regulations.
+            </p>
+        </div>
+        
+        <a href="/" class="back-link">
+            <i class="fas fa-arrow-left"></i>
+            Return to Patient Forms
+        </a>
     </div>
-</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const viewBtn = document.getElementById('viewBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const printBtn = document.getElementById('printBtn');
+            const shareBtn = document.getElementById('shareBtn');
+
+            // Add loading states for better UX
+            function addLoadingState(button, duration = 1000) {
+                button.classList.add('loading');
+                setTimeout(() => {
+                    button.classList.remove('loading');
+                }, duration);
+            }
+
+            // View PDF functionality
+            viewBtn.addEventListener('click', function() {
+                addLoadingState(this, 500);
+            });
+
+            // Download PDF functionality
+            downloadBtn.addEventListener('click', function() {
+                addLoadingState(this, 1500);
+                
+                // Show success message after download starts
+                setTimeout(() => {
+                    showNotification('Download started!', 'success');
+                }, 500);
+            });
+
+            // Print PDF functionality
+            printBtn.addEventListener('click', function() {
+                addLoadingState(this, 2000);
+                
+                // Open PDF in new window and trigger print
+                const printWindow = window.open('/pdf', '_blank');
+                
+                if (printWindow) {
+                    printWindow.addEventListener('load', function() {
+                        setTimeout(() => {
+                            printWindow.print();
+                        }, 500);
+                    });
+                } else {
+                    showNotification('Please allow popups to print the PDF', 'warning');
+                }
+            });
+
+            // Share PDF functionality
+            shareBtn.addEventListener('click', function() {
+                addLoadingState(this, 1000);
+                
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Patient Record PDF',
+                        text: 'Medical record document',
+                        url: window.location.origin + '/pdf'
+                    }).then(() => {
+                        showNotification('PDF shared successfully!', 'success');
+                    }).catch((error) => {
+                        if (error.name !== 'AbortError') {
+                            showNotification('Error sharing PDF', 'error');
+                        }
+                    });
+                } else {
+                    // Fallback for browsers that don't support Web Share API
+                    copyToClipboard(window.location.origin + '/pdf');
+                    showNotification('PDF link copied to clipboard!', 'info');
+                }
+            });
+
+            // Utility functions
+            function showNotification(message, type = 'info') {
+                // Create notification element
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    padding: 15px 20px;
+                    border-radius: 8px;
+                    color: white;
+                    font-weight: 600;
+                    z-index: 1000;
+                    transform: translateX(400px);
+                    transition: transform 0.3s ease;
+                    max-width: 300px;
+                `;
+                
+                // Set color based on type
+                switch(type) {
+                    case 'success':
+                        notification.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                        break;
+                    case 'warning':
+                        notification.style.background = 'linear-gradient(135deg, #f39c12, #e67e22)';
+                        break;
+                    case 'error':
+                        notification.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
+                        break;
+                    default:
+                        notification.style.background = 'linear-gradient(135deg, #3498db, #2980b9)';
+                }
+                
+                notification.textContent = message;
+                document.body.appendChild(notification);
+                
+                // Animate in
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(0)';
+                }, 100);
+                
+                // Animate out and remove
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(400px)';
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 300);
+                }, 3000);
+            }
+
+            function copyToClipboard(text) {
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(text);
+                } else {
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = text;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                }
+            }
+
+            // Add keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey || e.metaKey) {
+                    switch(e.key) {
+                        case 'p':
+                            e.preventDefault();
+                            printBtn.click();
+                            break;
+                        case 's':
+                            e.preventDefault();
+                            downloadBtn.click();
+                            break;
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>

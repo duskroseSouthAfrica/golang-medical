@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,7 +30,7 @@
         .header h1 {
             font-size: 2.5rem;
             margin-bottom: 10px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .header p {
@@ -40,7 +41,7 @@
         .container {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
             max-width: 1200px;
             margin: 0 auto;
             overflow: hidden;
@@ -159,10 +160,7 @@
             padding-left: 50px;
         }
 
-        .required {
-            color: #e74c3c;
-            margin-left: 3px;
-        }
+
 
         .form-row {
             display: grid;
@@ -194,6 +192,7 @@
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
             min-width: 200px;
+            text-decoration: none;
         }
 
         .submit-btn:hover {
@@ -214,20 +213,20 @@
             .form-content {
                 padding: 20px;
             }
-            
+
             .form-grid {
                 grid-template-columns: 1fr;
             }
-            
+
             .form-row,
             .form-row.triple {
                 grid-template-columns: 1fr;
             }
-            
+
             .header h1 {
                 font-size: 2rem;
             }
-            
+
             .form-header h2 {
                 font-size: 1.5rem;
             }
@@ -311,6 +310,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="header">
         <h1><i class="fas fa-hospital"></i> Dusk Rose Pty(Ltd)</h1>
@@ -340,42 +340,47 @@
             </div>
 
             <form action="/finish" method="post">
+                <!-- =================== Patient Demographics & Contact =================== -->
                 <div class="section">
                     <div class="section-header">
                         <i class="fas fa-user"></i>
                         <h3>Patient Demographics & Contact Information</h3>
                     </div>
-                    
+
+                    <!-- Basic Info -->
                     <div class="info-card">
                         <h4><i class="fas fa-info-circle"></i> Basic Information</h4>
                         <div class="form-row triple">
                             <div class="form-group">
                                 <i class="fas fa-id-card input-icon"></i>
-                                <input type="text" name="unique_id" class="form-control with-icon" placeholder="Unique Patient ID" required>
+                                <input type="text" name="unique_id" class="form-control with-icon"
+                                    placeholder="Unique Patient ID">
                             </div>
                             <div class="form-group">
                                 <i class="fas fa-user input-icon"></i>
-                                <input type="text" name="first_name" class="form-control with-icon" placeholder="First Name" required>
+                                <input type="text" name="first_name" class="form-control with-icon"
+                                    placeholder="First Name">
                             </div>
                             <div class="form-group">
                                 <i class="fas fa-user input-icon"></i>
-                                <input type="text" name="middle_name" class="form-control with-icon" placeholder="Middle Name">
+                                <input type="text" name="middle_name" class="form-control with-icon"
+                                    placeholder="Middle Name">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <i class="fas fa-user input-icon"></i>
-                                <input type="text" name="surname" class="form-control with-icon" placeholder="Surname" required>
+                                <input type="text" name="surname" class="form-control with-icon" placeholder="Surname">
                             </div>
                             <div class="form-group">
                                 <i class="fas fa-calendar input-icon"></i>
-                                <input type="date" name="dob" class="form-control with-icon" required>
+                                <input type="date" name="dob" class="form-control with-icon">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <i class="fas fa-venus-mars input-icon"></i>
-                                <select name="gender" class="form-control with-icon" required>
+                                <select name="gender" class="form-control with-icon">
                                     <option value="">Select Gender</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
@@ -396,57 +401,69 @@
                         </div>
                     </div>
 
+                    <!-- Contact Details -->
                     <div class="info-card">
                         <h4><i class="fas fa-address-book"></i> Contact Details</h4>
                         <div class="form-row">
                             <div class="form-group">
                                 <i class="fas fa-phone input-icon"></i>
-                                <input type="tel" name="phone" class="form-control with-icon" placeholder="Phone Number" required>
+                                <input type="tel" name="phone" class="form-control with-icon"
+                                    placeholder="Phone Number">
                             </div>
                             <div class="form-group">
                                 <i class="fas fa-envelope input-icon"></i>
-                                <input type="email" name="email" class="form-control with-icon" placeholder="Email Address">
+                                <input type="email" name="email" class="form-control with-icon"
+                                    placeholder="Email Address">
                             </div>
                         </div>
                         <div class="form-group">
                             <i class="fas fa-map-marker-alt input-icon"></i>
-                            <textarea name="address" class="form-control with-icon" placeholder="Physical Address" style="padding-left: 50px;"></textarea>
+                            <textarea name="address" class="form-control with-icon" placeholder="Physical Address"
+                                style="padding-left: 50px;"></textarea>
                         </div>
                     </div>
 
+                    <!-- Emergency Contact -->
                     <div class="info-card">
                         <h4><i class="fas fa-users"></i> Emergency Contact</h4>
                         <div class="form-row triple">
                             <div class="form-group">
                                 <i class="fas fa-user-friends input-icon"></i>
-                                <input type="text" name="next_of_kin" class="form-control with-icon" placeholder="Next of Kin Name">
+                                <input type="text" name="next_of_kin" class="form-control with-icon"
+                                    placeholder="Next of Kin Name">
                             </div>
                             <div class="form-group">
                                 <i class="fas fa-link input-icon"></i>
-                                <input type="text" name="relationship" class="form-control with-icon" placeholder="Relationship">
+                                <input type="text" name="relationship" class="form-control with-icon"
+                                    placeholder="Relationship">
                             </div>
                             <div class="form-group">
                                 <i class="fas fa-phone input-icon"></i>
-                                <input type="tel" name="kin_contact" class="form-control with-icon" placeholder="Emergency Contact">
+                                <input type="tel" name="kin_contact" class="form-control with-icon"
+                                    placeholder="Emergency Contact">
                             </div>
                         </div>
                     </div>
 
+                    <!-- Insurance Info -->
                     <div class="info-card">
                         <h4><i class="fas fa-shield-alt"></i> Insurance Information</h4>
                         <div class="form-row">
                             <div class="form-group">
                                 <i class="fas fa-building input-icon"></i>
-                                <input type="text" name="insurance_provider" class="form-control with-icon" placeholder="Medical Aid/Insurance Provider">
+                                <input type="text" name="insurance_provider" class="form-control with-icon"
+                                    placeholder="Medical Aid/Insurance Provider">
                             </div>
                             <div class="form-group">
                                 <i class="fas fa-id-badge input-icon"></i>
-                                <input type="text" name="member_number" class="form-control with-icon" placeholder="Member/Policy Number">
+                                <input type="text" name="member_number" class="form-control with-icon"
+                                    placeholder="Member/Policy Number">
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- =================== Clinical & Medical Info =================== -->
                 <div class="section">
                     <div class="section-header">
                         <i class="fas fa-stethoscope"></i>
@@ -458,125 +475,36 @@
                             <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">
                                 <i class="fas fa-history"></i> Clinical History
                             </label>
-                            <textarea name="clinical_history" class="form-control" placeholder="Patient's clinical history, past medical conditions, surgeries, etc." rows="4"></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #e74c3c;">
-                                <i class="fas fa-exclamation-triangle"></i> Allergies & Adverse Reactions
-                            </label>
-                            <textarea name="allergies" class="form-control" placeholder="Known allergies, drug reactions, food intolerances" rows="4"></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">
-                                <i class="fas fa-diagnoses"></i> Medical Assessments
-                            </label>
-                            <textarea name="assessments" class="form-control" placeholder="Current diagnosis, medical assessments, examination findings" rows="4"></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #27ae60;">
-                                <i class="fas fa-clipboard-list"></i> Treatment & Management Plan
-                            </label>
-                            <textarea name="treatment_plan" class="form-control" placeholder="Treatment protocols, management strategies, care plan" rows="4"></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #8e44ad;">
-                                <i class="fas fa-pills"></i> Current Medications
-                            </label>
-                            <textarea name="medication" class="form-control" placeholder="Current medications, dosages, frequency, duration" rows="4"></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #f39c12;">
-                                <i class="fas fa-user-md"></i> Specialist Referrals
-                            </label>
-                            <textarea name="referrals" class="form-control" placeholder="Referrals to specialists, recommended consultations" rows="4"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="info-card" style="margin-top: 30px;">
-                        <h4><i class="fas fa-flask"></i> Test Results & Investigations</h4>
-                        <div class="form-group">
-                            <textarea name="test_results" class="form-control" placeholder="Laboratory results, imaging studies, diagnostic test outcomes" rows="4"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="info-card">
-                        <h4><i class="fas fa-calendar-check"></i> Consultation Details</h4>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <i class="fas fa-clock input-icon"></i>
-                                <input type="datetime-local" name="consultation_datetime" class="form-control with-icon">
-                            </div>
-                            <div class="form-group">
-                                <i class="fas fa-map-marker-alt input-icon"></i>
-                                <input type="text" name="consultation_place" class="form-control with-icon" placeholder="Consultation Location/Facility">
-                            </div>
+                            <textarea name="clinical_history" class="form-control"></textarea>
                         </div>
                         <div class="form-group">
                             <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">
-                                <i class="fas fa-comment-medical"></i> Patient Response to Treatment
+                                <i class="fas fa-vial"></i> Test Results
                             </label>
-                            <textarea name="patient_reaction" class="form-control" placeholder="Patient's response to treatment, side effects, compliance, follow-up notes" rows="3"></textarea>
+                            <textarea name="test_results" class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #2c3e50;">
+                                <i class="fas fa-notes-medical"></i> Consultation Notes
+                            </label>
+                            <textarea name="consultation_notes" class="form-control"></textarea>
                         </div>
                     </div>
                 </div>
 
+                <!-- =================== Submit Section =================== -->
                 <div class="submit-section">
                     <button type="submit" class="submit-btn">
                         <i class="fas fa-save"></i>
                         Save Patient Record
                     </button>
-                    <p style="margin-top: 15px; color: #666; font-size: 14px;">
-                        <i class="fas fa-lock"></i> All patient information is securely encrypted and HIPAA compliant
-                    </p>
-                </div>
+
+
+
+
             </form>
         </div>
     </div>
-
-    <script>
-        // Add some interactivity
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.querySelector('form');
-            const inputs = document.querySelectorAll('.form-control');
-            
-            // Add focus animations
-            inputs.forEach(input => {
-                input.addEventListener('focus', function() {
-                    this.parentElement.style.transform = 'scale(1.02)';
-                });
-                
-                input.addEventListener('blur', function() {
-                    this.parentElement.style.transform = 'scale(1)';
-                });
-            });
-            
-            // Form validation feedback
-            form.addEventListener('submit', function(e) {
-                const requiredFields = document.querySelectorAll('[required]');
-                let isValid = true;
-                
-                requiredFields.forEach(field => {
-                    if (!field.value.trim()) {
-                        field.style.borderColor = '#e74c3c';
-                        field.style.boxShadow = '0 0 0 3px rgba(231, 76, 60, 0.1)';
-                        isValid = false;
-                    } else {
-                        field.style.borderColor = '#27ae60';
-                        field.style.boxShadow = '0 0 0 3px rgba(39, 174, 96, 0.1)';
-                    }
-                });
-                
-                if (!isValid) {
-                    e.preventDefault();
-                    alert('Please fill in all required fields.');
-                }
-            });
-        });
-    </script>
 </body>
+
 </html>

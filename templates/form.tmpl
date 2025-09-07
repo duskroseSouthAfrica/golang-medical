@@ -7,6 +7,7 @@
     <title>Patient Record Management System</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
+        /* ======================= ORIGINAL CSS ======================= */
         * {
             margin: 0;
             padding: 0;
@@ -159,8 +160,6 @@
         .form-control.with-icon {
             padding-left: 50px;
         }
-
-
 
         .form-row {
             display: grid;
@@ -351,10 +350,11 @@
                     <div class="info-card">
                         <h4><i class="fas fa-info-circle"></i> Basic Information</h4>
                         <div class="form-row triple">
+                            <!-- Unique ID -->
                             <div class="form-group">
                                 <i class="fas fa-id-card input-icon"></i>
-                                <input type="text" name="unique_id" class="form-control with-icon"
-                                    placeholder="Unique Patient ID">
+                                <input type="text" name="unique_id" id="unique_id"
+                                    class="form-control with-icon" placeholder="ID Number">
                             </div>
                             <div class="form-group">
                                 <i class="fas fa-user input-icon"></i>
@@ -374,7 +374,9 @@
                             </div>
                             <div class="form-group">
                                 <i class="fas fa-calendar input-icon"></i>
-                                <input type="date" name="dob" class="form-control with-icon">
+                                <!-- DOB FIELD (READONLY) -->
+                                <input type="text" name="dob" id="dob" class="form-control with-icon" readonly
+                                    placeholder="Date of Birth">
                             </div>
                         </div>
                         <div class="form-row">
@@ -498,13 +500,34 @@
                         <i class="fas fa-save"></i>
                         Save Patient Record
                     </button>
-
-
-
-
+                </div>
             </form>
         </div>
     </div>
+
+    <!-- =================== JAVASCRIPT TO AUTO-FILL DOB =================== -->
+    <script>
+        const uniqueIdInput = document.getElementById('unique_id');
+        const dobInput = document.getElementById('dob');
+
+        uniqueIdInput.addEventListener('input', function () {
+            const id = uniqueIdInput.value;
+            if (id.length >= 6) {
+                let yy = parseInt(id.substring(0, 2), 10);
+                let mm = id.substring(2, 4);
+                let dd = id.substring(4, 6);
+
+                // Determine century
+                const currentYear = new Date().getFullYear() % 100;
+                let century = (yy <= currentYear) ? 2000 : 1900;
+                let fullYear = century + yy;
+
+                dobInput.value = `${fullYear}-${mm}-${dd}`;
+            } else {
+                dobInput.value = '';
+            }
+        });
+    </script>
 </body>
 
 </html>
